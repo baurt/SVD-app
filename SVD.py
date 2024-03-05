@@ -12,12 +12,12 @@ from sklearn.preprocessing import StandardScaler
 
 
 
-
-url = st.text_input("Enter image url","John Doe")
+st.write("This App resizes your image based on input")
+url = st.text_input("Enter image url",'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-after/Landscape-BW.jpg')
 
 image = io.imread(url)[:, :, 0]
 print(f'Your image size {image.shape}')
-plt.imshow(image, cmap='gray')
+st.image(image, caption="Your image")
 
 U, sing_vals, V = np.linalg.svd(image)
 
@@ -26,16 +26,14 @@ sigma = np.zeros(shape = image.shape)
 np.fill_diagonal(sigma, sing_vals)
 U.shape, sigma.shape, V.shape
 
-k=int(st.text_input("Enter square matrix size","number"))
+k=int(st.text_input("Enter square matrix size","100"))
 trunc_U = U[:, :k]
 trunc_sigma = sigma[:k, :k]
 trunc_V = V[:k, :]
 trunc_U.shape, trunc_sigma.shape, trunc_V.shape
 
-fig, ax = plt.subplots(1, 2, figsize=(15, 7))
+fig, ax = plt.subplots(1, 1, figsize=(15, 7))
 
-
-ax[0].imshow(U@sigma@V, cmap = 'gray')
-ax[0].set_title('Исходное')
-ax[1].imshow(trunc_U@trunc_sigma@trunc_V, cmap = 'gray')
-ax[1].set_title('После SVD')
+ax.imshow(trunc_U@trunc_sigma@trunc_V, cmap = 'gray')
+ax.set_title('После SVD')
+st.pyplot(fig)
