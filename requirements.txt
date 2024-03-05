@@ -7,5 +7,6 @@ prophet
 seaborn
 numpy
 matplotlib
-sklearn
+sklearn.preprocessing
+sklearn.decomposition
 skimage
