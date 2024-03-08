@@ -89,7 +89,6 @@ st.title("Choose Income")
 # Slider
 ind_inc = st.slider("Select a value", min_value=round(min(train2.iloc[:,1]),1), max_value=round(max(train2.iloc[:,1]),1), value=round(max(train2.iloc[:,1])/2), step=1)
 
-x.predict(train[["CCAvg","Income"]])
 
 my_prob=ss.transform(pd.DataFrame(data=[[cr_score, ind_inc ]], columns=['CCAvg', 'Income']))
 prob=x.predict(my_prob)
