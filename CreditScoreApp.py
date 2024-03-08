@@ -45,32 +45,36 @@ class LogReg:
     def __init__(self, learning_rate=0.001, n=1):
         self.learning_rate = learning_rate
         self.n_features = n
-        self.coef_ = np.random.uniform(size=(n + 1))  # Random initialization for coefficients
-        self.intercept_ = self.coef_[0]  # Intercept is the first coefficient
+        self.coef_ = np.zeros(n)  # Random initialization for coefficients
+        self.intercept_ = 0.0  # Intercept is the first coefficient
 
     def fit(self, X, y, num_iterations=1000):
-        # Add a column of ones to X for the intercept term
-        X_with_intercept = np.c_[np.ones(X.shape[0]), X]
+        
+        
         
 
         
         for iteration in range(num_iterations):
-            predictions = 1/(1+np.exp(X_with_intercept.dot(self.coef_)))
+            predictions = self._sigmoid(X.dot(self.coef_)+self.intercept_)
             
             
             errors = predictions - y
-            gradient = X_with_intercept.T.dot(errors) / X.shape[0]
+            gradient = X.T.dot(errors) / X.shape[0]
             
 
             self.coef_ = self.coef_ - self.learning_rate * gradient
-            self.intercept_ = self.coef_[0]
+            self.intercept_ = self.intercept_-self.learning_rate * np.sum(predictions - y) / X.shape[0]
+
+
+    def _sigmoid(self, z):
+
+        return 1 / (1 + np.exp(-z))
 
 
 
-    def predict(self, X):
-        X_with_intercept = np.c_[np.ones(X.shape[0]), X]
+    def predict(self, X):       
         
-        return 1-1/(1+np.exp(X_with_intercept.dot(self.coef_)))
+        return self._sigmoid(X.dot(self.coef_)+self.intercept_)
 
 x=LogReg(0.1, n=train.shape[1]-1)
 x.fit(train.iloc[: , np.arange(train.shape[1]-1)],train.iloc[:,train.shape[1]-1])
