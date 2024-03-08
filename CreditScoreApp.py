@@ -10,7 +10,7 @@ from sklearn.datasets import load_iris # pip install scikit-learn
 from sklearn.decomposition import TruncatedSVD, PCA
 from sklearn.preprocessing import StandardScaler
 
-st.write("This App predicts probability of a client paying back loan")
+st.write("This App calculates how given parameters affect loan repayment based on provided csv or xlsx file and it also predicts probability of a client paying back loan")
 
 st.title("Upload your data to train the app")
 
@@ -78,6 +78,15 @@ class LogReg:
 
 x=LogReg(0.1, n=train.shape[1]-1)
 x.fit(train.iloc[: , np.arange(train.shape[1]-1)],train.iloc[:,train.shape[1]-1])
+st.title("Variable Coefficients")
+st.write(x.coef_[0:2])
+
+st.write("Data plot")
+fig=plt.figure(figsize=(12,8))
+sns.scatterplot(train,x="CCAvg", y="Income", hue="Personal.Loan")
+xl=np.linspace(-1.5,3,1000)
+plt.plot(xl, 0.04/2.15-0.42/2.15*(xl))
+st.pyplot(fig)
 
 st.title("Choose Credit Score")
 
@@ -92,6 +101,7 @@ ind_inc = st.slider("Select a value", min_value=round(min(train2.iloc[:,1]),1), 
 
 my_prob=ss.transform(pd.DataFrame(data=[[cr_score, ind_inc ]], columns=['CCAvg', 'Income']))
 prob=x.predict(my_prob)
+
 st.title("Probability of repayment")
 st.write(prob)  
 
