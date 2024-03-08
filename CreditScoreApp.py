@@ -92,6 +92,7 @@ ind_inc = st.slider("Select a value", min_value=round(min(train2.iloc[:,1]),1), 
 
 my_prob=ss.transform(pd.DataFrame(data=[[cr_score, ind_inc ]], columns=['CCAvg', 'Income']))
 prob=x.predict(my_prob)
+st.title("Probability of repayment")
 st.write(prob)  
 
 
