@@ -40,7 +40,7 @@ from sklearn.metrics import accuracy_score
 import optuna
 
 
-df = pd.read_csv('/Users/baur/SVD-app/heart.csv')
+df = pd.read_csv('heart.csv')
 X, y = df.drop('HeartDisease', axis=1), df['HeartDisease']
 X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
 
