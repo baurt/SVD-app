@@ -37,7 +37,7 @@ from sklearn.metrics import accuracy_score
 
 
 # tunning hyperparamters model
-import optuna
+
 
 
 df = pd.read_csv('heart.csv')
