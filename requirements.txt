@@ -9,3 +9,4 @@ numpy
 matplotlib
 scikit-image
 scikit-learn
+catboost
